@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AcmeCorp\ReferenceExtension;
+namespace Bobdenotter\RssExtension;
 
 use Bolt\Extension\BaseExtension;
 

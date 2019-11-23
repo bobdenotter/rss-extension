@@ -1,12 +1,12 @@
 {
-    "name": "acmecorp/reference-extension",
-    "description": "📦 This Bolt extension can be used as a starting point to base your own extensions on.",
+    "name": "bobdenotter/rss-extension",
+    "description": "Provide RSS, Atom and JSON feeds for Bolt 4",
     "type": "bolt-extension",
     "license": "MIT",
     "authors": [
         {
-            "name": "YourNameHere",
-            "email": "youremail@acme.com"
+            "name": "Bob den Otter",
+            "email": "bobdenotter@gmail.com"
         }
     ],
     "require": {
@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "AcmeCorp\\ReferenceExtension\\": "src/"
+            "Bobdenotter\\RssExtension\\": "src/"
         }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
-        "entrypoint": "AcmeCorp\\ReferenceExtension\\Extension"
+        "entrypoint": "Bobdenotter\\RssExtension\\Extension"
     }
 }
