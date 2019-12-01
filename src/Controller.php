@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Bobdenotter\RssExtension;
-
 
 use Bolt\Extension\ExtensionController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,14 +16,10 @@ class Controller extends ExtensionController
             'name' => $name,
         ];
 
-
 //        $config = $this->extension->getConfig();
 
         dump($this->getConfig());
 
-
-
         return $this->render('@reference-extension/page.html.twig', $context);
     }
-
 }

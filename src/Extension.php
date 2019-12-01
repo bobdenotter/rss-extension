@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Bobdenotter\RssExtension;
 
 use Bolt\Extension\BaseExtension;
-use Symfony\Component\Routing\Annotation\Route;
-
 
 class Extension extends BaseExtension
 {
@@ -48,7 +46,5 @@ class Extension extends BaseExtension
         $this->registerTwigExtension(new Twig());
 
         $this->addTwigNamespace('reference-extension');
-
     }
-
 }
