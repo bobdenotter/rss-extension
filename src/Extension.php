@@ -24,13 +24,7 @@ class Extension extends BaseExtension
      */
     public function getRoutes(): array
     {
-        return [
-            'rss_extension' => new \Symfony\Component\Routing\Route(
-                '/feed/{type}.xml',
-                ['_controller' => 'Bobdenotter\RssExtension\Controller::index'],
-                ['type' => '(rss|atom)']
-            ),
-        ];
+        return RegisterControllers::getRoutes();
     }
 
     /**
@@ -45,6 +39,6 @@ class Extension extends BaseExtension
         $this->registerWidget(new ReferenceWidget());
         $this->registerTwigExtension(new Twig());
 
-        $this->addTwigNamespace('reference-extension');
+        $this->addTwigNamespace('rss-extension');
     }
 }

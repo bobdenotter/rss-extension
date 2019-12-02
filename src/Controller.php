@@ -9,17 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Controller extends ExtensionController
 {
-    public function index($name = 'foo'): Response
+    public function feed($type = 'foo', $extension = 'xml'): Response
     {
         $context = [
             'title' => 'AcmeCorp Reference Extension',
-            'name' => $name,
+            'type' => $type,
         ];
 
-//        $config = $this->extension->getConfig();
-
-        dump($this->getConfig());
-
-        return $this->render('@reference-extension/page.html.twig', $context);
+        return $this->render('@rss-extension/rss.xml.twig', $context);
     }
 }
