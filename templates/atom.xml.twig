@@ -1,45 +1,39 @@
+{% extends '@rss-extension/base.twig' %}
+{% block main %}
 <?xml version="1.0" encoding="UTF-8" ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>{{ app.config.get('general/sitename') }}</title>
-    <subtitle>{{ app.config.get('general/payoff') }}</subtitle>
+    <title>{{ config.get('general/sitename') }}</title>
+    <subtitle>{{ config.get('general/payoff') }}</subtitle>
     <link href="{{ url('homepage') }}"/>
     <language>{{ htmllang()|lower }}</language>
     <generator>Bolt</generator>
-    <generator uri="http://bolt.cm/" version="1.0">Bolt CMS</generator>
+    <generator uri="http://bolt.cm/" version="4.0">Bolt CMS</generator>
     {%- for record in records %}
-        {%- set user = app.users.getUser(record.ownerid) %}
-
         <entry>
-            <title xml:lang="{{ htmllang() }}">{{ record.title|striptags }}</title>
-            <link href="{{ url('contentlink', { 'contenttypeslug': record.contenttype.singular_slug, 'slug': record.slug } ) }}"/>
-            <published>{{ record.datepublish|date("r") }}</published>
+            <title xml:lang="{{ htmllang() }}">{{ record|title|striptags }}</title>
+            <link href="{{ url('record', { 'contentTypeSlug': record.ContentTypeSingularSlug, 'slugOrId': record.slug } ) }}"/>
+            <published>{{ record.publishAt|date("r") }}</published>
             <author>
-                <name>{{ user.displayname|default('unknown') }}</name>
-                <email>{{ user.email|default('unknown') }}</email>
+                <name>{{ record.author.displayname|default('unknown') }}</name>
+                <email>{{ record.author.email|default('unknown') }}</email>
             </author>
-            <id>{{ record.contenttype.singular_slug }}-{{ record.id }}</id>
-            {% if record.taxonomy is iterable %}
-                {%- for taxonomyname, taxonomy in record.taxonomy %}
-                    {%- for taxonomyvalue in taxonomy %}
-                        <category domain="{{ taxonomyname }}"><![CDATA[ {{ taxonomyvalue }} ]]></category>
-                    {%- endfor %}
-                {%- endfor %}
-            {%- endif -%}
+            <id>{{ record.ContentTypeSingularSlug }}-{{ record.id }}</id>
+            {% for type, taxonomies in record|taxonomies %}
+                {% for taxonomy in taxonomies %}
+                    <category domain="{{ type }}"><![CDATA[ {{ taxonomy.name }} ]]></category>
+                {% endfor %}
+            {% endfor %}
             <summary xml:lang="{{ htmllang() }}">
-                {{ record|rss_safe('teaser', 50, false) }}
+                {{ record|excerpt(100) }}
             </summary>
             <content xml:lang="{{ htmllang() }}">
-                {{ record|rss_safe('body', content_length, false) }}
+                {{ record|rss('teaser, content, body', content_length, true) }}
             </content>
-            {%- if record.image is not empty %}
-
-                <link rel="image" href="{{ absolute_url(thumbnail(record.image, 600, 400)) }}"/>
-                <link rel="enclosure" href="{{ absolute_url(thumbnail(record.image, 600, 400)) }}"/>
-
-            {%- endif %}
-
+            {% if record|image is not empty %}
+                <link rel="image" href="{{ absolute_url(thumbnail(record, 600, 400)) }}"/>
+                <link rel="enclosure" href="{{ absolute_url(thumbnail(record, 600, 400)) }}"/>
+            {% endif %}
         </entry>
-
     {%- endfor %}
-
 </feed>
+{% endblock %}

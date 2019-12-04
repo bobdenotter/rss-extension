@@ -3,42 +3,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>{-{ app.config.get('general/sitename') }}</title>
-        <atom:link href="{-{ canonical() }}" rel="self" type="application/rss+xml"/>
-        <link>{-{ url('homepage') }}</link>
-        {-% if app.config.get('general/payoff') is defined %}
-            <description>{-{ app.config.get('general/payoff') }}</description>
-        {-% endif %}
-        <language>{-{ htmllang()|lower }}</language>
+        <title>{{ config.get('general/sitename') }}</title>
+        <atom:link href="{{ canonical('homepage') }}" rel="self" type="application/rss+xml"/>
+        <link>{{ canonical('homepage') }}</link>
+        {% if config.get('general/payoff') is defined %}
+            <description>{{ config.get('general/payoff') }}</description>
+        {% endif %}
+        <language>{{ htmllang()|lower }}</language>
         <generator>Bolt</generator>
-        {-% for record in records %}
-            {-% set user = app.users.getUser(record.ownerid) %}
+        {% for record in records %}
             <item>
-                <title>{-{ record.title|striptags }}</title>
-                <link>{-{ url('contentlink', { 'contenttypeslug': record.contenttype.singular_slug, 'slug': record.slug } ) }}</link>
-                <pubDate>{-{ record.datepublish|date("r") }}</pubDate>
-                <author>{-{ user.email|default('unknown') }} ({-{ user.displayname|default('unknown') }})</author>
-                <guid isPermaLink="false">{-{ record.contenttype.singular_slug }}/{-{ record.id }}</guid>
-                {-% if record.taxonomy is iterable %}
-                    {-%- for taxonomyname, taxonomy in record.taxonomy %}
-                        {-%- for taxonomyvalue in taxonomy %}
-                            <category domain="{-{ taxonomyname }}"><![CDATA[ {-{ taxonomyvalue }} ]]></category>
-                        {-%- endfor %}
-                    {-%- endfor %}
-                {-%- endif %}
+                <title>{{ record|title|striptags }}</title>
+                <link>{{ url('record', { 'contentTypeSlug': record.ContentTypeSingularSlug, 'slugOrId': record.slug } ) }}</link>
+                <pubDate>{{ record.publishAt|date("r") }}</pubDate>
+                <author>{{ record.author.email|default('unknown') }} ({{ record.author.displayname|default('unknown') }})</author>
+                <guid isPermaLink="false">{{ record.ContentTypeSingularSlug }}/{{ record.id }}</guid>
+                {% for type, taxonomies in record|taxonomies %}
+                    {% for taxonomy in taxonomies %}
+                        <category domain="{{ type }}"><![CDATA[ {{ taxonomy.name }} ]]></category>
+                    {% endfor %}
+                {% endfor %}
                 <description>
-                    {-%- if content_length == 0 -%}
-                        {-{ record|rss_safe('teaser, body') }}
-                    {-%- else -%}
-                        {-{ record|rss_safe('teaser, body', content_length) }}
-                    {-%- endif -%}
+                    {{ record|rss('teaser, content, body', content_length) }}
                 </description>
-                {-% if record.image is not empty %}
-                    <image>{-{ absolute_url(thumbnail(record.image, 600, 400)) }}</image>
-                    <enclosure url="{-{ absolute_url(thumbnail(record.image, 600, 400)) }}" type="image/jpeg" />
-                {-% endif %}
+                {% if record|image is not empty %}
+                    <image>{{ absolute_url(thumbnail(record, 600, 400)) }}</image>
+                    <enclosure url="{{ absolute_url(thumbnail(record, 600, 400)) }}" type="image/jpeg" />
+                {% endif %}
             </item>
-        {-% endfor %}
+        {% endfor %}
     </channel>
 </rss>
 {% endblock %}
