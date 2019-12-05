@@ -1,13 +1,13 @@
-# Acme ReferenceExtension
+# Bolt RSS Extension 
 
-Author: YourNameHere
+Author: Bob den Otter
 
 This Bolt extension can be used as a starting point to base your own extensions on.
 
 Installation:
 
 ```bash
-composer require acmecorp/reference-extension
+composer require bobdenotter/rss-extension 
 ```
 
 
