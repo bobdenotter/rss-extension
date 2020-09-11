@@ -35,27 +35,9 @@ class Twig extends AbstractExtension
      * Creates RSS safe content. Wraps it in CDATA tags, strips style and
      * scripts out. Can optionally also return a (cleaned) excerpt.
      */
-    public function rss(Content $record, string $fields = 'teaser, content, body', ?int $excerptLength = 0, bool $isRss = true): Markup
+    public function rss(string $result): Markup
     {
-        // Make sure we have an array of fields. Even if it's only one.
-        if (! is_array($fields)) {
-            $fields = explode(',', $fields);
-        }
-        $fields = array_map('trim', $fields);
-
-        $result = '';
-
-        foreach ($fields as $field) {
-            $result .= $record->getFieldValue($field);
-        }
-
-        if ($excerptLength > 0) {
-            $result = Html::trimText($result, $excerptLength);
-        }
-
-        if ($isRss) {
-            $result = '<![CDATA[ ' . $result . ' ]]>';
-        }
+        $result = '<![CDATA[ ' . $result . ' ]]>';
 
         return new Markup($result, 'utf-8');
     }

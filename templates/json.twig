@@ -1,5 +1,4 @@
 {% extends '@rss-extension/base.twig' %}
-
 {% block main %}
-{{ records|json_records(constant('JSON_PRETTY_PRINT'))|raw }}
+{{- records|json_records(constant('JSON_PRETTY_PRINT'))|raw }}
 {% endblock %}

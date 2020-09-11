@@ -9,7 +9,7 @@ use Bolt\Widget\Injector\RequestZone;
 use Bolt\Widget\Injector\Target;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class ReferenceWidget extends BaseWidget
+class RSSSnippets extends BaseWidget
 {
     protected $name = 'autodiscovery widget';
     protected $target = Target::END_OF_HEAD;

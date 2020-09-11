@@ -39,8 +39,6 @@ autodiscovery: true
 #
 # enabled:        When set to false, returns a 404 on request
 # feed_records:   Number of records to provide in the feed
-# feed_template:  RSS template to use
-# atom_template:  Atom template to use
 # content_length: Number of characters in the content. If set to '0', the
 #                 content will not be trimmed, and HTML (links, markup, etc)
 #                 will be kept intact
@@ -51,8 +49,6 @@ autodiscovery: true
 sitewide:
   enabled: true
   feed_records: 10
-  feed_template: rss.twig
-  atom_template: atom.twig
   content_length: 0
   content_types: [ entries, pages ]
 
@@ -61,13 +57,9 @@ sitewide:
 #pages:
 #    enabled: true
 #    feed_records: 10
-#    feed_template: rss.twig
-#    atom_template: atom.twig
 #    content_length: 0
 
 #entries:
 #    enabled: false
 #    feed_records: 1
-#    feed_template: rss.twig
-#    atom_template: atom.twig
 #    content_length: 400

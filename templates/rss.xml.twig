@@ -24,7 +24,7 @@
                     {% endfor %}
                 {% endfor %}
                 <description>
-                    {{ record|rss('teaser, content, body', content_length) }}
+                    {{ record|excerpt(content_length)|rss }}
                 </description>
                 {% if record|image is not empty %}
                     <image>{{ absolute_url(thumbnail(record, 600, 400)) }}</image>

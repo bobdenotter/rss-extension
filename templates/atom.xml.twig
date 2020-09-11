@@ -27,7 +27,7 @@
                 {{ record|excerpt(100) }}
             </summary>
             <content xml:lang="{{ htmllang() }}">
-                {{ record|rss('teaser, content, body', content_length, true) }}
+                {{ record|excerpt(content_length)|rss }}
             </content>
             {% if record|image is not empty %}
                 <link rel="image" href="{{ absolute_url(thumbnail(record, 600, 400)) }}"/>
