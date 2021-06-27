@@ -15,7 +15,7 @@
             <item>
                 <title>{{ record|title|striptags }}</title>
                 <link>{{ url('record', { 'contentTypeSlug': record.ContentTypeSingularSlug, 'slugOrId': record.slug } ) }}</link>
-                <pubDate>{{ record.publishAt|date("r") }}</pubDate>
+                <pubDate>{{ record.publishedAt|date("r") }}</pubDate>
                 <author>{{ record.author.email|default('unknown') }} ({{ record.author.displayname|default('unknown') }})</author>
                 <guid isPermaLink="false">{{ record.ContentTypeSingularSlug }}/{{ record.id }}</guid>
                 {% for type, taxonomies in record|taxonomies %}
