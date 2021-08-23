@@ -18,15 +18,7 @@ class RegisterControllers
                     'type' => '(rss|atom|json)',
                     'extension' => '(rss|atom|json|xml)',
                 ]
-            ),
-            'rss_extension_single' => new Route(
-                '/{type}/{contenttype}/feed.{extension}',
-                ['_controller' => 'Bobdenotter\RssExtension\Controller::feedSingle'],
-                [
-                    'type' => '(rss|atom|json)',
-                    'extension' => '(rss|atom|json|xml)',
-                ]
-            ),
+            )
         ];
     }
 }
