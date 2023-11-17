@@ -47,10 +47,6 @@ class Controller extends ExtensionController
             $headerContentType = 'application/json';
         }
 
-        if (!empty($config['feed_template'])) {
-            $template = $config['feed_template'];
-        }
-
         $response = $this->render($template, $context);
         $response->headers->set('Content-Type', $headerContentType);
 
